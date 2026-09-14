@@ -61,11 +61,6 @@ flowchart LR
     Persistence <--> Disk[("data/*.dat")]
 ```
 
-Every screen is a plain loop in its controller: "go back" is a `return`, "go forward" is a nested
-call that loops and eventually returns. There is no recursive re-entry into the menu system, so a
-long-running session can't grow the call stack unbounded — a real issue in the original prototype
-this project evolved from.
-
 ### Design patterns
 
 | Pattern | Where | Why |
