@@ -1,0 +1,18 @@
+# Build output
+target/
+bin/
+*.class
+
+# Runtime data (generated on first launch, see README)
+*.dat
+
+# IDE
+.idea/
+*.iml
+.vscode/
+.classpath
+.project
+.settings/
+
+# OS
+.DS_Store
