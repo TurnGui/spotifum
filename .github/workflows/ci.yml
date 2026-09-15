@@ -2,13 +2,29 @@ name: CI
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main, dev ]
   pull_request:
-    branches: [ main ]
+    branches: [ main, dev ]
 
 jobs:
   build:
     runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_DB: spotifum
+          POSTGRES_USER: spotifum
+          POSTGRES_PASSWORD: spotifum
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
     steps:
       - uses: actions/checkout@v4
 
@@ -21,3 +37,7 @@ jobs:
 
       - name: Build and run tests
         run: mvn -B verify
+        env:
+          SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/spotifum
+          SPRING_DATASOURCE_USERNAME: spotifum
+          SPRING_DATASOURCE_PASSWORD: spotifum

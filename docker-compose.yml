@@ -1,0 +1,15 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: spotifum-db
+    environment:
+      POSTGRES_DB: spotifum
+      POSTGRES_USER: spotifum
+      POSTGRES_PASSWORD: spotifum
+    ports:
+      - "5432:5432"
+    volumes:
+      - spotifum-data:/var/lib/postgresql/data
+
+volumes:
+  spotifum-data:
