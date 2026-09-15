@@ -16,7 +16,7 @@
 
 SpotifUM simulates a Spotify-like streaming service entirely in the terminal: accounts, subscription
 tiers, a track catalog, four different playlist strategies, a loyalty points system, and a leaderboard.
-It doesn't play actual audio — the goal was never audio playback, it was **designing a small system
+It doesn't play actual audio, the goal was never audio playback, it was **designing a small system
 the right way**: clear layering, immutable data where it matters, defensive copying, and a domain
 model that reads like the problem it's solving.
 
@@ -61,11 +61,6 @@ flowchart LR
     Persistence <--> Disk[("data/*.dat")]
 ```
 
-Every screen is a plain loop in its controller: "go back" is a `return`, "go forward" is a nested
-call that loops and eventually returns. There is no recursive re-entry into the menu system, so a
-long-running session can't grow the call stack unbounded — a real issue in the original prototype
-this project evolved from.
-
 ### Design patterns
 
 | Pattern | Where | Why |
@@ -104,7 +99,7 @@ committed to the repository.
 
 ## Testing
 
-Unit tests cover the domain model — the layer with the actual business rules: subscription
+Unit tests cover the domain model, the layer with the actual business rules: subscription
 behavior, points calculation, playlist construction and cloning, favorites tracking, and the user
 repository. Run them with `mvn test`.
 
@@ -131,8 +126,7 @@ This remains a learning project and is upfront about it:
 - Playback is simulated (prints to the console) — there's no real audio.
 - Persistence is plain Java serialization to flat files, not a database; fine for a single-process
   CLI tool, not for concurrent access.
-- There's no authentication beyond an email lookup — acceptable for a course project, not for
-  production.
+- There's no authentication beyond an email lookup.
 
 Natural next steps if this grew further: a Spring Boot REST API over the same domain model, a real
 datastore (Postgres) behind the repository interfaces, and a proper password/auth layer.
