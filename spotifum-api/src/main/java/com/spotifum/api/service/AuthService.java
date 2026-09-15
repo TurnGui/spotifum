@@ -3,12 +3,12 @@ package com.spotifum.api.service;
 import com.spotifum.api.dto.LoginRequest;
 import com.spotifum.api.dto.LoginResponse;
 import com.spotifum.api.dto.RegisterRequest;
+import com.spotifum.api.exception.InvalidRequestException;
+import com.spotifum.api.exception.ResourceNotFoundException;
 import com.spotifum.api.model.User;
 import com.spotifum.api.repository.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import com.spotifum.api.exception.InvalidRequestException;
-import com.spotifum.api.exception.ResourceNotFoundException;
 
 @Service
 public class AuthService {
@@ -45,7 +45,7 @@ public class AuthService {
 
     public LoginResponse login(LoginRequest request) {
         User user = userRepository.findByEmail(request.getEmail())
-                .orElseThrow(() -> new RuntimeException("Invalid credentials"));
+                .orElseThrow(() -> new ResourceNotFoundException("Invalid credentials"));
 
         if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
             throw new ResourceNotFoundException("Invalid credentials");
